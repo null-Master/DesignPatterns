@@ -3,13 +3,13 @@ package decorator;
 /**
  * Created by wangym on 2016/12/22.
  */
-public class Espresso extends Beverage {
-    public Espresso() {
-        description = "Espresso";
+public class BeverageEspressoImpl extends Beverage {
+    public BeverageEspressoImpl() {
+        description = "BeverageEspressoImpl";
     }
 
     @Override
     public double cost() {
-        return 0;
+        return 1.99;
     }
 }

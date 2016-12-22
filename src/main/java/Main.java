@@ -1,3 +1,8 @@
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
+import decorator.Beverage;
+import decorator.BeverageEspressoImpl;
+import decorator.CondimentMochaImpl;
+import decoratortest.CondimentSoympl;
 import observer.CurrentConditionsDisplay;
 import observer.NowConditionsDisplay;
 import observer.WeatherDataSubjectImpl;
@@ -31,8 +36,26 @@ public class Main {
         weatherData.setMeasurements(15, 15, 15);
     }
 
+    private static void decorator() {
+        Beverage beverage = new BeverageEspressoImpl();
+        System.out.println(beverage.getDescription() + " $" + beverage.cost());
+
+        beverage = new CondimentMochaImpl(beverage);
+        System.out.println(beverage.getDescription() + " $" + beverage.cost());
+    }
+
+    private static void decoratorTest() {
+        decoratortest.Beverage beverage = new decoratortest.BeverageEspressoImpl();
+        System.out.println(beverage.getDescription() + " $" + beverage.cost());
+
+        beverage.addCondiment(new decoratortest.CondimentMochaImpl()).addCondiment(new CondimentSoympl());
+        System.out.println(beverage.getDescription() + " $" + beverage.cost());
+    }
+
     public static void main(String[] args) {
 //        strategy();
-        observer();
+//        observer();
+        decorator();
+        decoratorTest();
     }
 }
