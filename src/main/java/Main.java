@@ -3,6 +3,7 @@ import decorator.Beverage;
 import decorator.BeverageEspressoImpl;
 import decorator.CondimentMochaImpl;
 import decoratortest.CondimentSoympl;
+import factoryMethod.*;
 import observer.CurrentConditionsDisplay;
 import observer.NowConditionsDisplay;
 import observer.WeatherDataSubjectImpl;
@@ -52,10 +53,28 @@ public class Main {
         System.out.println(beverage.getDescription() + " $" + beverage.cost());
     }
 
+    private static void factoreMethodPizza() {
+        PizzaStore nyPizzaStore = PizzaStoreFactory.getPizzaStore(PizzaStoreLocation.NY);
+        PizzaStore chiPizzaStore = PizzaStoreFactory.getPizzaStore(PizzaStoreLocation.CHICAGO);
+
+        Pizza pizza = null;
+
+        pizza = nyPizzaStore.orderPizza(PizzaType.CHEESE);
+        System.out.println("");
+        pizza = nyPizzaStore.orderPizza(PizzaType.VEGGIE);
+        System.out.println("");
+
+        pizza = chiPizzaStore.orderPizza(PizzaType.CHEESE);
+
+
+
+    }
+
     public static void main(String[] args) {
 //        strategy();
 //        observer();
-        decorator();
-        decoratorTest();
+//        decorator();
+//        decoratorTest();
+        factoreMethodPizza();
     }
 }
