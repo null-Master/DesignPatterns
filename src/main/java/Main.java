@@ -1,4 +1,8 @@
 import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
+import composite.MenuComponent;
+import composite.MenuItemMenuComponentImpl;
+import composite.MenuMenuComponentImpl;
+import composite.Waitress;
 import decorator.Beverage;
 import decorator.BeverageEspressoImpl;
 import decorator.CondimentMochaImpl;
@@ -65,16 +69,44 @@ public class Main {
         System.out.println("");
 
         pizza = chiPizzaStore.orderPizza(PizzaType.CHEESE);
-
-
-
     }
+
+    public static void composite() {
+        MenuComponent pancakeHouseMenu =
+                new MenuMenuComponentImpl("PANCAKE HOUSE MENU", "Breakfase");
+        MenuComponent dinerMenu =
+                new MenuMenuComponentImpl("DINER MENU", "Lunch");
+        MenuComponent cafeMenu =
+                new MenuMenuComponentImpl("CAFE MENU", "Dinner");
+        MenuComponent dessertMenu =
+                new MenuMenuComponentImpl("DESSERT MENU", "Dessert of course!");
+
+        MenuComponent allMenus = new MenuMenuComponentImpl("ALL MENUS", "All menus combined");
+
+        allMenus.add(pancakeHouseMenu);
+        allMenus.add(dinerMenu);
+        allMenus.add(cafeMenu);
+
+        dinerMenu.add(new MenuItemMenuComponentImpl(
+               "Pasta", "a slice of sourdough bread", true, 3.89));
+        dinerMenu.add(dessertMenu);
+
+        dessertMenu.add(new MenuItemMenuComponentImpl(
+                "Apple pie", "Apple pie with a flakey crust", true, 1.59));
+
+        Waitress waitress = new Waitress(allMenus);
+//        waitress.printMenu();
+
+        waitress.printVegetarianMenu();
+    }
+
 
     public static void main(String[] args) {
 //        strategy();
 //        observer();
 //        decorator();
 //        decoratorTest();
-        factoreMethodPizza();
+//        factoreMethodPizza();
+        composite();
     }
 }
