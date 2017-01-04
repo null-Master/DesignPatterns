@@ -11,6 +11,7 @@ import factoryMethod.*;
 import observer.CurrentConditionsDisplay;
 import observer.NowConditionsDisplay;
 import observer.WeatherDataSubjectImpl;
+import state.GumballMachine;
 import strategy.Duck;
 import strategy.DuckRealImpl;
 import strategy.FlyNoWayImpl;
@@ -100,6 +101,24 @@ public class Main {
         waitress.printVegetarianMenu();
     }
 
+    public static void State () {
+        GumballMachine gumballMachine = new GumballMachine(10);
+
+        System.out.println(gumballMachine);
+
+        gumballMachine.insertQuarter();
+        gumballMachine.turnCrank();
+
+        System.out.println(gumballMachine);
+
+        gumballMachine.insertQuarter();
+        gumballMachine.ejectQuarter();
+        gumballMachine.turnCrank();
+
+        System.out.println(gumballMachine);
+
+    }
+
 
     public static void main(String[] args) {
 //        strategy();
@@ -107,6 +126,7 @@ public class Main {
 //        decorator();
 //        decoratorTest();
 //        factoreMethodPizza();
-        composite();
+//        composite();
+        State();
     }
 }
