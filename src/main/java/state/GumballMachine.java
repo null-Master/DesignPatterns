@@ -6,76 +6,76 @@ import javax.swing.plaf.basic.BasicScrollPaneUI;
  * Created by wangym on 2017/1/4.
  */
 public class GumballMachine {
-    private final static int SOLD_OUT = 0;
-    private final static int NO_QUARTER = 1;
-    private final static int HAS_QUARTER = 2;
-    private final static int SOLD = 3;
+    private State soldOutState;
+    private State noQuarterState;
+    private State hasQuarterState;
+    private State soldState;
+    private State winnerState;
 
-    int state = SOLD_OUT;
-    int count = 0;
+    private State state = soldOutState;
+    private int count = 0;
 
     public GumballMachine(int count) {
+        soldOutState = new SoldOutStateImpl(this);
+        noQuarterState = new NoQuarterStateImpl(this);
+        hasQuarterState = new HasQuarterStateImpl(this);
+        soldState = new SoldStateImpl(this);
+        winnerState = new WinnerStateImpl(this);
         this.count = count;
-        state = count > 0 ? NO_QUARTER : SOLD_OUT;
+        state = count > 0 ? noQuarterState : soldOutState;
     }
 
-    public void insertQuarter () {
-        if (state == HAS_QUARTER) {
-            System.out.println("You can't insert another quarter");
-        } else if (state == NO_QUARTER) {
-            state = HAS_QUARTER;
-            System.out.println("You inserted a quarter");
-        } else if (state == SOLD_OUT) {
-            System.out.println("You can't insert a quarter, the machine is sold out");
-        } else if (state == SOLD) {
-            System.out.println("Please wait, wer're already giving you a gumball");
-        }
+    public void insertQuarter() {
+        state.insertQuarter();
     }
 
     public void ejectQuarter() {
-        if (state == HAS_QUARTER) {
-            System.out.println("Quarter returned");
-            state = NO_QUARTER;
-        } else if (state == NO_QUARTER) {
-            System.out.println("You haven't inserted a quarter");
-        } else if (state == SOLD) {
-            System.out.println("Sorry, you already turned the crank");
-        } else if (state == SOLD_OUT) {
-            System.out.println("You can't eject, you haven't inserted a quarter yet");
+        state.ejectQuarter();
+    }
+
+    public void turnCrank() {
+        state.turnCrank();
+        state.dispense();
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void releaseBall() {
+        System.out.println("A gumball comes rolling out the slot...");
+        if (count != 0) {
+            count -= 1;
         }
     }
 
-    public void turnCrank () {
-        if (state == SOLD) {
-            System.out.println("Turning twice doesn't get you another gumball!");
-        } else if (state == NO_QUARTER) {
-            System.out.println("You turned but there's no quarter");
-        } else if (state == SOLD_OUT) {
-            System.out.println("You turned, but there are no gumballs");
-        } else if (state == HAS_QUARTER) {
-            System.out.println("You turned...");
-            state = SOLD;
-            dispense();
-        }
+
+    public State getSoldOutState() {
+        return soldOutState;
     }
 
-    public void dispense () {
-        if (state == SOLD) {
-            System.out.println("A gumball comes rolling out the slot");
-            --count;
-            if (count == 0) {
-                System.out.println("Oops, out of gumballs!");
-                state = SOLD_OUT;
-            } else {
-                state = NO_QUARTER;
-            }
-        } else if (state == NO_QUARTER) {
-            System.out.println("You need to pay first");
-        } else if (state == SOLD_OUT) {
-            System.out.println("No gumball dispensed");
-        } else if (state == HAS_QUARTER) {
-            System.out.println("No gumball dispensed");
-        }
+    public State getNoQuarterState() {
+        return noQuarterState;
+    }
+
+    public State getHasQuarterState() {
+        return hasQuarterState;
+    }
+
+    public State getSoldState() {
+        return soldState;
+    }
+
+    public State getWinnerState() {
+        return winnerState;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     @Override
