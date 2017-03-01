@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
  * Created by wangym on 2017/1/9.
  */
 public class OwnerInvocationHandlerImpl implements InvocationHandler {
-    PersonBean person;
+    Object person;
 
-    public OwnerInvocationHandlerImpl(PersonBean person) {
+    public OwnerInvocationHandlerImpl(Object person) {
         this.person = person;
     }
 
