@@ -11,6 +11,5 @@ public class Client {
         context.doAnything();
         context.setStrategy(strategyP2);
         context.doAnything();
-
     }
 }
